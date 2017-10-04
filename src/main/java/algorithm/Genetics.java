@@ -4,16 +4,30 @@ import java.util.*;
 
 public class Genetics {
 
+    final int MAX_ITERATIONS;
+
     List<Unit> population;
     Unit model;
     Unit bestResult;
 
     public Genetics() {
+        MAX_ITERATIONS = 100;
         population = new ArrayList<Unit>();
         for (int i = 0; i <= 10; i++) {
             Unit unit = new Unit();
             List<Integer> integerList = generateRandom();
             population.add(unit);
+        }
+    }
+
+    public Genetics(int MAX_ITERATIONS) {
+        this.MAX_ITERATIONS = MAX_ITERATIONS;
+    }
+
+    public void go() {
+        for (int i = 0; i <= MAX_ITERATIONS; i++) {
+            newGeneration();
+            fitness(population);
         }
     }
 
@@ -38,13 +52,20 @@ public class Genetics {
         }
     }
 
-    public void mutate(Unit unit) {
+    public Unit mutate(Unit unit) {
         List<Integer> coinsList = unit.getCoins();
-        coinsList.set(new Random().nextInt(9) + 1, new Random().nextInt(9));
+        int position1 = new Random().nextInt(8) + 1;
+        int position2 = new Random().nextInt(8) + 1;
+        Integer temp = coinsList.get(position1);
+        coinsList.set(position1, coinsList.get(position2));
+        coinsList.set(position2, temp);
+        unit.setCoins(coinsList);
+        return unit;
     }
 
     public void newGeneration() {
         List<Unit> parents = getBestOnes();
+        mutate(parents.get(parents.size() - 1));
         List<Unit> childs = new ArrayList<Unit>();
         for (int i = 0, j = 2; i < parents.size() - 1; i++, j--) {
             Unit parent1 = parents.get(i);
