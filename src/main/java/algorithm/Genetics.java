@@ -6,6 +6,7 @@ public class Genetics {
 
     List<Unit> population;
     Unit model;
+    Unit bestResult;
 
     public Genetics() {
         population = new ArrayList<Unit>();
@@ -31,6 +32,9 @@ public class Genetics {
                                 u.getCoins().get(i) - model.getCoins().get(i);
             }
             u.setAdaptation(adaptation);
+            if (u.getAdaptation() < bestResult.getAdaptation()) {
+                bestResult = u;
+            }
         }
     }
 
@@ -48,7 +52,7 @@ public class Genetics {
             Unit child2 = new Unit();
             for (int z = j; z >= 0; z++) {
                 Unit parent2 = parents.get(z);
-                crossingover(parent1, parent1, child1, child2);
+                crossingover(parent1, parent2, child1, child2);
                 childs.add(child1);
                 childs.add(child2);
             }
