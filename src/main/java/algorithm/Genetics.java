@@ -20,10 +20,6 @@ public class Genetics {
         this.model = model;
     }
 
-    public List<Unit> select(List<Unit> population) {
-        return null;
-    }
-
     public void fitness(List<Unit> population) {
         for (Unit u : population
                 ) {
@@ -43,12 +39,21 @@ public class Genetics {
         coinsList.set(new Random().nextInt(9) + 1, new Random().nextInt(9));
     }
 
-    public List<Unit> newGeneration() {
+    public void newGeneration() {
         List<Unit> parents = getBestOnes();
         List<Unit> childs = new ArrayList<Unit>();
-        for (int i = 0; i < parents.size(); i++) {
-            
+        for (int i = 0, j = 2; i < parents.size() - 1; i++, j--) {
+            Unit parent1 = parents.get(i);
+            Unit child1 = new Unit();
+            Unit child2 = new Unit();
+            for (int z = j; z >= 0; z++) {
+                Unit parent2 = parents.get(z);
+                crossingover(parent1, parent1, child1, child2);
+                childs.add(child1);
+                childs.add(child2);
+            }
         }
+        population = childs;
     }
 
     private List<Unit> getBestOnes() {
@@ -69,10 +74,10 @@ public class Genetics {
 
     private void crossingover(Unit firstParent, Unit secondParent, Unit firstChild, Unit secondChild) {
         int crossPoint = new Random().nextInt(firstParent.getCoins().size() / 2);
-        List<Integer> integerList = new ArrayList<Integer>();
+        List<Integer> integerList;
         firstChild.setCoins(firstParent.getCoins().subList(0, crossPoint - 1));
         integerList = firstChild.getCoins();
-        integerList.addAll(secondParent.getCoins().subList(crossPoint, secondParent.getCoins().size() - 1);
+        integerList.addAll(secondParent.getCoins().subList(crossPoint, secondParent.getCoins().size() - 1));
         firstChild.setCoins(integerList);
         secondChild.setCoins(secondParent.getCoins().subList(0, crossPoint - 1));
         integerList = secondChild.getCoins();
