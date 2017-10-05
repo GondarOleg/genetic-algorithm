@@ -1,5 +1,6 @@
 package algorithm;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Unit implements Comparable {
@@ -22,7 +23,9 @@ public class Unit implements Comparable {
     }
 
     public List<Integer> getCoins() {
-        return coins;
+        List<Integer> integerList = new LinkedList<Integer>();
+        integerList.addAll(coins);
+        return integerList;
     }
 
     public void setCoins(List<Integer> coins) {
@@ -38,5 +41,8 @@ public class Unit implements Comparable {
         }
         return 0;
 
+    }
+    public int getCoinByIndex(int index){
+        return coins.get(index);
     }
 }
