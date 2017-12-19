@@ -1,17 +1,13 @@
-package algorithm;
+package model;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Unit implements Comparable {
     private List<Integer> coins;
-    int adaptation;
+    private int adaptation;
 
     public Unit() {
-    }
-
-    public Unit(List<Integer> coins) {
-        this.coins = coins;
     }
 
     public int getAdaptation() {
@@ -41,8 +37,5 @@ public class Unit implements Comparable {
         }
         return 0;
 
-    }
-    public int getCoinByIndex(int index){
-        return coins.get(index);
     }
 }
